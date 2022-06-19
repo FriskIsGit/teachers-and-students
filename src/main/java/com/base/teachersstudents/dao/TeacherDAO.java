@@ -13,8 +13,9 @@ import java.util.stream.Collectors;
 @Component
 public class TeacherDAO implements ITeacherDAO{
     @Autowired
-    TeacherRepository teacherRepository;
+    private TeacherRepository teacherRepository;
 
+    @Override
     public List<Teacher> getTeachers(){
         return teacherRepository.findAll();
     }
@@ -53,6 +54,7 @@ public class TeacherDAO implements ITeacherDAO{
         ).collect(Collectors.toList());
     }
 
+    @Override
     public void saveTeacher(Teacher teacher){
         if(teacher == null){
             return;

@@ -1,17 +1,16 @@
 package com.base.teachersstudents.entities;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 public class Teacher{
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator="teacher_gen")
+    @SequenceGenerator(name = "teacher_gen", sequenceName = "teacher_seq", allocationSize=1)
     @Id
-    @GeneratedValue
-    Long id;
+    private Long id;
 
-    String name, lastname, email, subject;
-    int age;
+    private String name, lastname, email, subject;
+    private int age;
 
     public Teacher(String name, String lastname, String email, String subject, int age){
         this.name = name;

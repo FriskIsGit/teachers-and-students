@@ -11,7 +11,7 @@ import static com.base.teachersstudents.service.Constraints.*;
 public class TeacherService implements ITeacherService{
 
     @Autowired
-    TeacherDAO teacherDAO;
+    private TeacherDAO teacherDAO;
 
     @Override
     public void registerTeacher(Teacher teacher){

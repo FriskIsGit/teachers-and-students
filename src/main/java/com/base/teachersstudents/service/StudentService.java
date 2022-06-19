@@ -10,7 +10,7 @@ import static com.base.teachersstudents.service.Constraints.*;
 @Service
 public class StudentService implements IStudentService{
     @Autowired
-    StudentDAO studentDAO;
+    private StudentDAO studentDAO;
 
     @Override
     public void registerStudent(Student student){

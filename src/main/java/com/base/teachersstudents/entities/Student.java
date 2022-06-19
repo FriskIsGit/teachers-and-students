@@ -1,19 +1,16 @@
 package com.base.teachersstudents.entities;
 
-import org.springframework.lang.NonNull;
-
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 public class Student{
     @Id
-    @GeneratedValue
-    Long id;
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator="student_gen")
+    @SequenceGenerator(name = "student_gen", sequenceName = "student_seq", allocationSize=1)
+    private Long id;
 
-    String name, lastname, email, major;
-    int age;
+    private String name, lastname, email, major;
+    private int age;
 
     public Student(String name, String lastname, String email, String major, int age){
         this.name = name;
