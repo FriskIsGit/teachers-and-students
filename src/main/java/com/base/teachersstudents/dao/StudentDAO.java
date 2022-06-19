@@ -3,6 +3,7 @@ package com.base.teachersstudents.dao;
 import com.base.teachersstudents.entities.Student;
 import com.base.teachersstudents.repo.StudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -28,7 +29,9 @@ public class StudentDAO implements IStudentDAO{
 
     @Override
     public void deleteById(long id){
-        studentRepository.deleteById(id);
+        if(studentRepository.existsById(id)){
+            studentRepository.deleteById(id);
+        }
     }
 
     @Override
@@ -52,10 +55,12 @@ public class StudentDAO implements IStudentDAO{
     }
 
     @Override
+    public long studentCount(){
+        return studentRepository.count();
+    }
+
+    @Override
     public void saveStudent(Student student){
-        if(student == null){
-            return;
-        }
         studentRepository.save(student);
     }
 }

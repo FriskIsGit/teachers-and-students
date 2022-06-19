@@ -5,6 +5,7 @@ import com.base.teachersstudents.entities.Student;
 import java.util.List;
 
 interface IStudentDAO{
+    long studentCount();
     void saveStudent(Student student);
     List<Student> getStudents();
     Student findById(long id);

@@ -29,7 +29,9 @@ public class TeacherDAO implements ITeacherDAO{
 
     @Override
     public void deleteById(long id){
-        teacherRepository.deleteById(id);
+        if(teacherRepository.existsById(id)){
+            teacherRepository.deleteById(id);
+        }
     }
 
     @Override
@@ -55,14 +57,12 @@ public class TeacherDAO implements ITeacherDAO{
     }
 
     @Override
+    public long teacherCount(){
+        return teacherRepository.count();
+    }
+
+    @Override
     public void saveTeacher(Teacher teacher){
-        if(teacher == null){
-            return;
-        }
-        try{
-            teacherRepository.save(teacher);
-        }catch (DataIntegrityViolationException integrityExc){
-            integrityExc.printStackTrace();
-        }
+        teacherRepository.save(teacher);
     }
 }

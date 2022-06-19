@@ -4,5 +4,5 @@ import com.base.teachersstudents.entities.Student;
 
 interface IStudentService{
     void registerStudent(Student student);
-    void deleteStudent(long id);
+    void deleteStudentById(long id);
 }

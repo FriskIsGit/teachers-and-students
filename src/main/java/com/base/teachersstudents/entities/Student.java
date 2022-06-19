@@ -1,7 +1,10 @@
 package com.base.teachersstudents.entities;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
 import javax.persistence.*;
 
+@Table(name = "students")
 @Entity
 public class Student{
     @Id
@@ -19,11 +22,13 @@ public class Student{
         this.major = major;
         this.age = age;
     }
-
-    public void setId(Long id){
-        this.id = id;
+    //Empty constructor to avoid 'No default constructor for entity' exception
+    private Student(){
     }
 
+    public Long getId(){
+        return id;
+    }
     public String getName(){
         return name;
     }

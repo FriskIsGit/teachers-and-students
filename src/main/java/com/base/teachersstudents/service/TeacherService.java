@@ -15,6 +15,10 @@ public class TeacherService implements ITeacherService{
 
     @Override
     public void registerTeacher(Teacher teacher){
+        if(teacher == null){
+            System.err.println("Null teacher");
+            return;
+        }
         if(isNameInvalid(teacher.getName())){
             System.err.println("Invalid name");
             return;
@@ -35,7 +39,7 @@ public class TeacherService implements ITeacherService{
     }
 
     @Override
-    public void deleteTeacher(long id){
+    public void deleteTeacherById(long id){
         teacherDAO.deleteById(id);
     }
 }

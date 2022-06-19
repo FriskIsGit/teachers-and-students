@@ -2,7 +2,11 @@ package com.base.teachersstudents.service;
 
 import com.base.teachersstudents.dao.StudentDAO;
 import com.base.teachersstudents.entities.Student;
+import org.hibernate.HibernateException;
+import org.hibernate.InstantiationException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.orm.jpa.JpaSystemException;
 import org.springframework.stereotype.Service;
 
 import static com.base.teachersstudents.service.Constraints.*;
@@ -14,6 +18,10 @@ public class StudentService implements IStudentService{
 
     @Override
     public void registerStudent(Student student){
+        if(student == null){
+            System.err.println("Null student");
+            return;
+        }
         if(isNameInvalid(student.getName())){
             System.err.println("Invalid name");
             return;
@@ -34,7 +42,7 @@ public class StudentService implements IStudentService{
     }
 
     @Override
-    public void deleteStudent(long id){
+    public void deleteStudentById(long id){
         studentDAO.deleteById(id);
     }
 }

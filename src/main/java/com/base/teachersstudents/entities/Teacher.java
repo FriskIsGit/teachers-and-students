@@ -2,6 +2,7 @@ package com.base.teachersstudents.entities;
 
 import javax.persistence.*;
 
+@Table(name = "teachers")
 @Entity
 public class Teacher{
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator="teacher_gen")
@@ -19,7 +20,9 @@ public class Teacher{
         this.subject = subject;
         this.age = age;
     }
-
+    //Empty constructor to avoid 'No default constructor for entity' exception
+    private Teacher(){
+    }
     public Long getId(){
         return id;
     }
