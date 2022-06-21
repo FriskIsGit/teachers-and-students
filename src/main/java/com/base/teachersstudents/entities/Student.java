@@ -1,19 +1,24 @@
 package com.base.teachersstudents.entities;
 
-import org.springframework.beans.factory.annotation.Autowired;
-
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Table(name = "students")
 @Entity
 public class Student{
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator="student_gen")
-    @SequenceGenerator(name = "student_gen", sequenceName = "student_seq", allocationSize=1)
     private Long id;
 
     private String name, lastname, email, major;
     private int age;
+    @JoinTable(
+            joinColumns = @JoinColumn(name = "student_id"),
+            inverseJoinColumns = @JoinColumn(name = "teacher_id")
+    )
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
+    private Set<Teacher> teachers = new HashSet<>();
 
     public Student(String name, String lastname, String email, String major, int age){
         this.name = name;
@@ -67,6 +72,10 @@ public class Student{
 
     public void setAge(int age){
         this.age = age;
+    }
+
+    public Set<Teacher> getTeachers(){
+        return teachers;
     }
 
     @Override

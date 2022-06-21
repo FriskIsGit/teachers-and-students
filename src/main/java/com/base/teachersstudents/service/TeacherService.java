@@ -3,18 +3,17 @@ package com.base.teachersstudents.service;
 import com.base.teachersstudents.dao.TeacherDAO;
 import com.base.teachersstudents.entities.Teacher;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import static com.base.teachersstudents.service.Constraints.*;
 
-@Component
+@Service
 public class TeacherService implements ITeacherService{
-
     @Autowired
     private TeacherDAO teacherDAO;
 
     @Override
-    public void registerTeacher(Teacher teacher){
+    public void saveTeacher(Teacher teacher){
         if(teacher == null){
             System.err.println("Null teacher");
             return;
@@ -36,6 +35,11 @@ public class TeacherService implements ITeacherService{
             return;
         }
         teacherDAO.saveTeacher(teacher);
+    }
+
+    @Override
+    public Teacher retrieveTeacherById(long id){
+        return teacherDAO.findById(id);
     }
 
     @Override

@@ -3,7 +3,6 @@ package com.base.teachersstudents.dao;
 import com.base.teachersstudents.entities.Teacher;
 import com.base.teachersstudents.repo.TeacherRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Component;
 
 import java.util.List;

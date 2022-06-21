@@ -2,6 +2,7 @@ package com.base.teachersstudents.service;
 
 import com.base.teachersstudents.dao.StudentDAO;
 import com.base.teachersstudents.entities.Student;
+import com.base.teachersstudents.entities.Teacher;
 import org.hibernate.HibernateException;
 import org.hibernate.InstantiationException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +18,7 @@ public class StudentService implements IStudentService{
     private StudentDAO studentDAO;
 
     @Override
-    public void registerStudent(Student student){
+    public void saveStudent(Student student){
         if(student == null){
             System.err.println("Null student");
             return;
@@ -39,6 +40,11 @@ public class StudentService implements IStudentService{
             return;
         }
         studentDAO.saveStudent(student);
+    }
+
+    @Override
+    public Student retrieveStudentById(long id){
+        return studentDAO.findById(id);
     }
 
     @Override
