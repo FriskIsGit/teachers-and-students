@@ -15,7 +15,7 @@ public class TeacherDAO implements ITeacherDAO{
     private TeacherRepository teacherRepository;
 
     @Override
-    public List<Teacher> getTeachers(){
+    public List<Teacher> getAllTeachers(){
         return teacherRepository.findAll();
     }
 

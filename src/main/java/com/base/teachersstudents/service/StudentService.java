@@ -2,12 +2,7 @@ package com.base.teachersstudents.service;
 
 import com.base.teachersstudents.dao.StudentDAO;
 import com.base.teachersstudents.entities.Student;
-import com.base.teachersstudents.entities.Teacher;
-import org.hibernate.HibernateException;
-import org.hibernate.InstantiationException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.EmptyResultDataAccessException;
-import org.springframework.orm.jpa.JpaSystemException;
 import org.springframework.stereotype.Service;
 
 import static com.base.teachersstudents.service.Constraints.*;

@@ -18,7 +18,7 @@ public class Student{
             inverseJoinColumns = @JoinColumn(name = "teacher_id")
     )
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
-    private Set<Teacher> teachers = new HashSet<>();
+    private final Set<Teacher> teachers = new HashSet<>();
 
     public Student(String name, String lastname, String email, String major, int age){
         this.name = name;

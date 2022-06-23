@@ -36,12 +36,10 @@ public class TeacherService implements ITeacherService{
         }
         teacherDAO.saveTeacher(teacher);
     }
-
     @Override
     public Teacher retrieveTeacherById(long id){
         return teacherDAO.findById(id);
     }
-
     @Override
     public void deleteTeacherById(long id){
         teacherDAO.deleteById(id);

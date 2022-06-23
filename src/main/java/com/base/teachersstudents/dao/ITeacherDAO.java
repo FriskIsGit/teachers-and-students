@@ -7,7 +7,7 @@ import java.util.List;
 interface ITeacherDAO{
     long teacherCount();
     void saveTeacher(Teacher teacher);
-    List<Teacher> getTeachers();
+    List<Teacher> getAllTeachers();
     Teacher findById(long id);
     void deleteById(long id);
     Teacher retrieveByNameAndLastname(String name, String lastname);

@@ -15,7 +15,7 @@ public class StudentDAO implements IStudentDAO{
     private StudentRepository studentRepository;
 
     @Override
-    public List<Student> getStudents(){
+    public List<Student> getAllStudents(){
         return studentRepository.findAll();
     }
 

@@ -7,7 +7,7 @@ import java.util.List;
 interface IStudentDAO{
     long studentCount();
     void saveStudent(Student student);
-    List<Student> getStudents();
+    List<Student> getAllStudents();
     Student findById(long id);
     void deleteById(long id);
     Student retrieveByNameAndLastname(String name, String lastname);

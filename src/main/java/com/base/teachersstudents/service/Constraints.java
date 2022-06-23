@@ -18,6 +18,4 @@ class Constraints{
     protected static boolean isAgeInvalid(int age){
         return age < MIN_AGE;
     }
-
-
 }
