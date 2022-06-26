@@ -7,7 +7,6 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Component
 public class StudentDAO implements IStudentDAO{
@@ -35,22 +34,22 @@ public class StudentDAO implements IStudentDAO{
 
     @Override
     public Student retrieveByNameAndLastname(String name, String lastname){
-        Optional<Student> possiblyStudent = studentRepository.findAll().stream().filter(student -> student.getName().equals(name) && student.getLastname().equals(lastname)).findAny();
-        return possiblyStudent.orElse(null);
+        return studentRepository.findFirstByNameAndLastname(name, lastname);
     }
 
     @Override
     public List<Student> retrieveByName(String name){
-        return studentRepository.findAll().stream().filter(
-                student -> student.getName().equals(name)
-        ).collect(Collectors.toList());
+        return studentRepository.findByName(name);
     }
 
     @Override
     public List<Student> retrieveByLastname(String lastname){
-        return studentRepository.findAll().stream().filter(
-                student -> student.getLastname().equals(lastname)
-        ).collect(Collectors.toList());
+        return studentRepository.findByLastname(lastname);
+    }
+
+    @Override
+    public List<Student> retrieveByMajor(String major){
+        return studentRepository.findByMajor(major);
     }
 
     @Override

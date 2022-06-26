@@ -25,6 +25,13 @@ public class TeachersStudentsApplication implements CommandLineRunner{
 		SpringApplicationBuilder applicationBuilder = new SpringApplicationBuilder(TeachersStudentsApplication.class);
 
 		ConfigurableApplicationContext applicationContext = applicationBuilder.run(args);
+
+		try{
+			System.out.println("Make app run indefinitely");
+			Thread.currentThread().join();
+		}catch (InterruptedException interruptExc){
+			System.err.println("App not running");
+		}
 	}
 
 	@Override

@@ -5,6 +5,9 @@ import com.base.teachersstudents.entities.Student;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
+import java.util.List;
+
 import static com.base.teachersstudents.service.Constraints.*;
 
 @Service
@@ -38,8 +41,32 @@ public class StudentService implements IStudentService{
     }
 
     @Override
-    public Student retrieveStudentById(long id){
+    public Student getStudentById(long id){
         return studentDAO.findById(id);
+    }
+
+    @Override
+    public List<Student> getStudentsByName(String name){
+        if(name == null){
+            return Collections.emptyList();
+        }
+        return studentDAO.retrieveByName(name);
+    }
+
+    @Override
+    public List<Student> getStudentsByLastname(String lastname){
+        if(lastname == null){
+            return Collections.emptyList();
+        }
+        return studentDAO.retrieveByLastname(lastname);
+    }
+
+    @Override
+    public Student getStudentByNameAndLastname(String name, String lastname){
+        if(name == null || lastname == null){
+            return null;
+        }
+        return studentDAO.retrieveByNameAndLastname(name, lastname);
     }
 
     @Override

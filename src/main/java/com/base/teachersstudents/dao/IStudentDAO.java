@@ -13,4 +13,5 @@ interface IStudentDAO{
     Student retrieveByNameAndLastname(String name, String lastname);
     List<Student> retrieveByName(String name);
     List<Student> retrieveByLastname(String lastname);
+    List<Student> retrieveByMajor(String major);
 }

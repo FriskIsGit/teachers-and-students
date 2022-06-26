@@ -5,6 +5,8 @@ import com.base.teachersstudents.entities.Teacher;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 import static com.base.teachersstudents.service.Constraints.*;
 
 @Service
@@ -37,9 +39,25 @@ public class TeacherService implements ITeacherService{
         teacherDAO.saveTeacher(teacher);
     }
     @Override
-    public Teacher retrieveTeacherById(long id){
+    public Teacher getTeacherById(long id){
         return teacherDAO.findById(id);
     }
+
+    @Override
+    public List<Teacher> getTeachersByName(String name){
+        return teacherDAO.retrieveByName(name);
+    }
+
+    @Override
+    public List<Teacher> getTeachersByLastname(String lastname){
+        return teacherDAO.retrieveByLastname(lastname);
+    }
+
+    @Override
+    public Teacher getTeacherByNameAndLastname(String name, String lastname){
+        return teacherDAO.retrieveByNameAndLastname(name, lastname);
+    }
+
     @Override
     public void deleteTeacherById(long id){
         teacherDAO.deleteById(id);
