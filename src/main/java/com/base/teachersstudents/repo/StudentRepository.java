@@ -1,6 +1,7 @@
 package com.base.teachersstudents.repo;
 
 import com.base.teachersstudents.entities.Student;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -13,4 +14,5 @@ public interface StudentRepository extends JpaRepository<Student, Long>{
     Student findFirstByNameAndLastname(String name, String lastname);
     List<Student> findByNameAndLastname(String name, String lastname);
     List<Student> findByMajor(String major);
+    List<Student> findAll(Sort sort);
 }

@@ -70,6 +70,22 @@ public class StudentService implements IStudentService{
     }
 
     @Override
+    public List<Student> getAllSortedAscendinglyBy(String fieldName){
+        if(fieldName == null){
+            return Collections.emptyList();
+        }
+        return studentDAO.retrieveByAscending(fieldName);
+    }
+
+    @Override
+    public List<Student> getAllSortedDescendinglyBy(String fieldName){
+        if(fieldName == null){
+            return Collections.emptyList();
+        }
+        return studentDAO.retrieveByDescending(fieldName);
+    }
+
+    @Override
     public void deleteStudentById(long id){
         studentDAO.deleteById(id);
     }

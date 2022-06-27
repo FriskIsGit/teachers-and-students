@@ -10,5 +10,7 @@ interface ITeacherService{
     List<Teacher> getTeachersByName(String name);
     List<Teacher> getTeachersByLastname(String lastname);
     Teacher getTeacherByNameAndLastname(String name, String lastname);
+    List<Teacher> getAllSortedAscendinglyBy(String fieldName);
+    List<Teacher> getAllSortedDescendinglyBy(String fieldName);
     void deleteTeacherById(long id);
 }

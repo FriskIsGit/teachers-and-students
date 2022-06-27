@@ -5,6 +5,7 @@ import com.base.teachersstudents.entities.Teacher;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.List;
 
 import static com.base.teachersstudents.service.Constraints.*;
@@ -45,21 +46,46 @@ public class TeacherService implements ITeacherService{
 
     @Override
     public List<Teacher> getTeachersByName(String name){
+        if(name == null){
+            return Collections.emptyList();
+        }
         return teacherDAO.retrieveByName(name);
     }
 
     @Override
     public List<Teacher> getTeachersByLastname(String lastname){
+        if(lastname == null){
+            return Collections.emptyList();
+        }
         return teacherDAO.retrieveByLastname(lastname);
     }
 
     @Override
     public Teacher getTeacherByNameAndLastname(String name, String lastname){
+        if(name == null || lastname == null){
+            return null;
+        }
         return teacherDAO.retrieveByNameAndLastname(name, lastname);
     }
 
     @Override
     public void deleteTeacherById(long id){
         teacherDAO.deleteById(id);
+    }
+
+    @Override
+    public List<Teacher> getAllSortedAscendinglyBy(String fieldName){
+        if(fieldName == null){
+            return Collections.emptyList();
+        }
+        return teacherDAO.retrieveByAscending(fieldName);
+    }
+
+    @Override
+    public List<Teacher> getAllSortedDescendinglyBy(String fieldName){
+        if(fieldName == null){
+            return Collections.emptyList();
+        }
+        return teacherDAO.retrieveByDescending(fieldName);
     }
 }

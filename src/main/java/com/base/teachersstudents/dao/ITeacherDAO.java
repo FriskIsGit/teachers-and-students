@@ -15,4 +15,6 @@ interface ITeacherDAO{
     List<Teacher> retrieveByName(String name);
     List<Teacher> retrieveByLastname(String lastname);
     List<Teacher> retrieveBySubject(String subject);
+    List<Teacher> retrieveByAscending(String fieldName);
+    List<Teacher> retrieveByDescending(String fieldName);
 }

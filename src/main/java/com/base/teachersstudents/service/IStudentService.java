@@ -10,5 +10,7 @@ interface IStudentService{
     List<Student> getStudentsByName(String name);
     List<Student> getStudentsByLastname(String lastname);
     Student getStudentByNameAndLastname(String name, String lastname);
+    List<Student> getAllSortedAscendinglyBy(String fieldName);
+    List<Student> getAllSortedDescendinglyBy(String fieldName);
     void deleteStudentById(long id);
 }

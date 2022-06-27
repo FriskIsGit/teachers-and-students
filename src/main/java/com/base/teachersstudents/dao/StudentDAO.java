@@ -3,6 +3,7 @@ package com.base.teachersstudents.dao;
 import com.base.teachersstudents.entities.Student;
 import com.base.teachersstudents.repo.StudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -55,6 +56,16 @@ public class StudentDAO implements IStudentDAO{
     @Override
     public List<Student> retrieveByMajor(String major){
         return studentRepository.findByMajor(major);
+    }
+
+    @Override
+    public List<Student> retrieveByAscending(String fieldName){
+        return studentRepository.findAll(Sort.by(Sort.Direction.ASC, fieldName));
+    }
+
+    @Override
+    public List<Student> retrieveByDescending(String fieldName){
+        return studentRepository.findAll(Sort.by(Sort.Direction.DESC, fieldName));
     }
 
     @Override

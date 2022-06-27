@@ -1,5 +1,4 @@
 import com.base.teachersstudents.TeachersStudentsApplication;
-import com.base.teachersstudents.dao.StudentDAO;
 import com.base.teachersstudents.entities.Student;
 import com.base.teachersstudents.entities.Teacher;
 import com.base.teachersstudents.service.StudentService;
@@ -13,6 +12,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -30,9 +31,6 @@ public class SpringTest {
 
     @Autowired
     private TeacherService teacherService;
-
-    @Autowired
-    private StudentDAO studentDAO;
 
     @Autowired
     StudentTeacherService studentTeacherService;
@@ -78,11 +76,11 @@ public class SpringTest {
 		studentService.saveStudent(student2);
 		studentService.saveStudent(student3);
 
-        List<Student> studentList = studentDAO.retrieveByLastname("Tawer");
+        List<Student> studentList = studentService.getStudentsByName("Tawer");
         System.out.println("By lastname size: " + studentList.size());
         printStudents(studentList);
 
-        Student firstRetrieved =  studentDAO.retrieveByNameAndLastname("Johny", "Jason");
+        Student firstRetrieved =  studentService.getStudentByNameAndLastname("Johny", "Jason");
         printStudent(firstRetrieved);
     }
     @Test
@@ -96,9 +94,23 @@ public class SpringTest {
         }
         printStudents(students);
     }
+    @Test
+    public void sortingTest(){
+        List<Student> students = studentService.getAllSortedAscendinglyBy("age");
+        printStudents(students);
+        System.out.println();
+        List<Teacher> teachers = teacherService.getAllSortedDescendinglyBy("name");
+        printTeachers(teachers);
+
+    }
     private static void printStudents(List<Student> students){
         for(Student s : students){
             System.out.println(s);
+        }
+    }
+    private static void printTeachers(List<Teacher> teachers){
+        for(Teacher t : teachers){
+            System.out.println(t);
         }
     }
     private static void printStudent(Student student){
