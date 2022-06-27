@@ -33,6 +33,11 @@ public class TeacherDAO implements ITeacherDAO{
     }
 
     @Override
+    public void deleteTeacher(Teacher teacher){
+        teacherRepository.delete(teacher);
+    }
+
+    @Override
     public Teacher retrieveByNameAndLastname(String name, String lastname){
         return teacherRepository.findFirstByNameAndLastname(name, lastname);
     }

@@ -10,6 +10,7 @@ interface ITeacherDAO{
     List<Teacher> getAllTeachers();
     Teacher findById(long id);
     void deleteById(long id);
+    void deleteTeacher(Teacher teacher);
     Teacher retrieveByNameAndLastname(String name, String lastname);
     List<Teacher> retrieveByName(String name);
     List<Teacher> retrieveByLastname(String lastname);

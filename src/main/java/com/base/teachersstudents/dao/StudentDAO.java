@@ -33,6 +33,11 @@ public class StudentDAO implements IStudentDAO{
     }
 
     @Override
+    public void deleteStudent(Student student){
+        studentRepository.delete(student);
+    }
+
+    @Override
     public Student retrieveByNameAndLastname(String name, String lastname){
         return studentRepository.findFirstByNameAndLastname(name, lastname);
     }

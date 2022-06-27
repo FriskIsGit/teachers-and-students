@@ -10,6 +10,7 @@ interface IStudentDAO{
     List<Student> getAllStudents();
     Student findById(long id);
     void deleteById(long id);
+    void deleteStudent(Student student);
     Student retrieveByNameAndLastname(String name, String lastname);
     List<Student> retrieveByName(String name);
     List<Student> retrieveByLastname(String lastname);
