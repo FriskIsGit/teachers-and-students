@@ -13,6 +13,7 @@ import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.logging.Level;
@@ -102,12 +103,30 @@ public class SpringTest {
         List<Teacher> teachers = teacherService.getAllSortedDescendinglyBy("name");
         printTeachers(teachers);
     }
-    private static void printStudents(List<Student> students){
+    @Test
+    public void retrieveStudentsByTeacher(){
+        Teacher aTeacher = teacherService.getTeacherById(7);
+        System.out.println("Size: " + aTeacher.getStudents().size());
+        printStudents(aTeacher.getStudents());
+    }
+    @Test
+    public void retrieveTeachersByStudent(){
+        Student aStudent = studentService.getStudentById(7);
+        System.out.println("Size: " + aStudent.getTeachers().size());
+        printTeachers(aStudent.getTeachers());
+    }
+    @Test
+    public void updateTest(){
+        Student aStudent = studentService.getStudentById(4);
+        aStudent.setEmail("anotheremail4@gm.ca");
+        studentService.saveStudent(aStudent);
+    }
+    private static void printStudents(Collection<Student> students){
         for(Student s : students){
             System.out.println(s);
         }
     }
-    private static void printTeachers(List<Teacher> teachers){
+    private static void printTeachers(Collection<Teacher> teachers){
         for(Teacher t : teachers){
             System.out.println(t);
         }

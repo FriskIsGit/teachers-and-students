@@ -14,5 +14,4 @@ public interface TeacherRepository extends JpaRepository<Teacher, Long>{
     Teacher findFirstByNameAndLastname(String name, String lastname);
     List<Teacher> findByNameAndLastname(String name, String lastname);
     List<Teacher> findBySubject(String subject);
-    List<Teacher> findAll(Sort sort);
 }
