@@ -5,6 +5,7 @@ import com.base.teachersstudents.entities.Student;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.lang.reflect.Field;
 import java.util.Collections;
 import java.util.List;
 
@@ -70,8 +71,16 @@ public class StudentService implements IStudentService{
     }
 
     @Override
+    public void deleteStudentById(long id){
+        studentDAO.deleteById(id);
+    }
+
+    @Override
     public List<Student> getAllSortedAscendinglyBy(String fieldName){
         if(fieldName == null){
+            return Collections.emptyList();
+        }
+        if(!fieldExistsInStudent(fieldName)){
             return Collections.emptyList();
         }
         return studentDAO.retrieveByAscending(fieldName);
@@ -82,11 +91,19 @@ public class StudentService implements IStudentService{
         if(fieldName == null){
             return Collections.emptyList();
         }
+        if(!fieldExistsInStudent(fieldName)){
+            return Collections.emptyList();
+        }
         return studentDAO.retrieveByDescending(fieldName);
     }
 
-    @Override
-    public void deleteStudentById(long id){
-        studentDAO.deleteById(id);
+    private boolean fieldExistsInStudent(String fieldName){
+        Field[] studentFields = Student.class.getDeclaredFields();
+        for (Field field : studentFields){
+            if(field.getName().equals(fieldName)){
+                return true;
+            }
+        }
+        return false;
     }
 }

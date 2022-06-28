@@ -101,7 +101,6 @@ public class SpringTest {
         System.out.println();
         List<Teacher> teachers = teacherService.getAllSortedDescendinglyBy("name");
         printTeachers(teachers);
-
     }
     private static void printStudents(List<Student> students){
         for(Student s : students){
