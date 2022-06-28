@@ -1,6 +1,8 @@
 package com.base.teachersstudents.dao;
 
 import com.base.teachersstudents.entities.Student;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 
@@ -17,4 +19,5 @@ interface IStudentDAO{
     List<Student> retrieveByMajor(String major);
     List<Student> retrieveByAscending(String fieldName);
     List<Student> retrieveByDescending(String fieldName);
+    Page<Student> retrievePage(Pageable pageable);
 }

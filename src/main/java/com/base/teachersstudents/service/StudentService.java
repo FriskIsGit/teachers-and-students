@@ -3,6 +3,9 @@ package com.base.teachersstudents.service;
 import com.base.teachersstudents.dao.StudentDAO;
 import com.base.teachersstudents.entities.Student;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.lang.reflect.Field;
@@ -77,10 +80,7 @@ public class StudentService implements IStudentService{
 
     @Override
     public List<Student> getAllSortedAscendinglyBy(String fieldName){
-        if(fieldName == null){
-            return Collections.emptyList();
-        }
-        if(!fieldExistsInStudent(fieldName)){
+        if(fieldName == null || !fieldExistsInStudent(fieldName)){
             return Collections.emptyList();
         }
         return studentDAO.retrieveByAscending(fieldName);
@@ -88,13 +88,34 @@ public class StudentService implements IStudentService{
 
     @Override
     public List<Student> getAllSortedDescendinglyBy(String fieldName){
-        if(fieldName == null){
-            return Collections.emptyList();
-        }
-        if(!fieldExistsInStudent(fieldName)){
+        if(fieldName == null || !fieldExistsInStudent(fieldName)){
             return Collections.emptyList();
         }
         return studentDAO.retrieveByDescending(fieldName);
+    }
+
+    @Override
+    public Page<Student> getStudentsPagedAscendinglyBy(int page, int size, String fieldName){
+        if(page < 0 || size < 1 || fieldName == null || !fieldExistsInStudent(fieldName)){
+            return Page.empty();
+        }
+        return studentDAO.retrievePage(PageRequest.of(
+                page,
+                size,
+                Sort.by(Sort.Direction.ASC, fieldName))
+        );
+    }
+
+    @Override
+    public Page<Student> getStudentsPagedDescendinglyBy(int page, int size, String fieldName){
+        if(page < 0 || size < 1 || fieldName == null || !fieldExistsInStudent(fieldName)){
+            return Page.empty();
+        }
+        return studentDAO.retrievePage(PageRequest.of(
+                page,
+                size,
+                Sort.by(Sort.Direction.DESC, fieldName))
+        );
     }
 
     private boolean fieldExistsInStudent(String fieldName){

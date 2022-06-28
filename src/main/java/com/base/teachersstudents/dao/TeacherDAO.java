@@ -3,6 +3,8 @@ package com.base.teachersstudents.dao;
 import com.base.teachersstudents.entities.Teacher;
 import com.base.teachersstudents.repo.TeacherRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Component;
 
@@ -66,6 +68,11 @@ public class TeacherDAO implements ITeacherDAO{
     @Override
     public List<Teacher> retrieveByDescending(String fieldName){
         return teacherRepository.findAll(Sort.by(Sort.Direction.DESC, fieldName));
+    }
+
+    @Override
+    public Page<Teacher> retrievePage(Pageable pageable){
+        return teacherRepository.findAll(pageable);
     }
 
     @Override

@@ -3,6 +3,8 @@ package com.base.teachersstudents.dao;
 import com.base.teachersstudents.entities.Student;
 import com.base.teachersstudents.repo.StudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Component;
 
@@ -66,6 +68,11 @@ public class StudentDAO implements IStudentDAO{
     @Override
     public List<Student> retrieveByDescending(String fieldName){
         return studentRepository.findAll(Sort.by(Sort.Direction.DESC, fieldName));
+    }
+
+    @Override
+    public Page<Student> retrievePage(Pageable pageable){
+        return studentRepository.findAll(pageable);
     }
 
     @Override

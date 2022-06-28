@@ -9,6 +9,7 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
 
@@ -18,6 +19,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = TeachersStudentsApplication.class)
@@ -120,6 +122,18 @@ public class SpringTest {
         Student aStudent = studentService.getStudentById(4);
         aStudent.setEmail("anotheremail4@gm.ca");
         studentService.saveStudent(aStudent);
+    }
+    @Test
+    public void paginationTest(){
+        //retrieves second page of size 5
+        Page<Student> pagedStudents = studentService.getStudentsPagedDescendinglyBy(1, 5, "name");
+        List<Student> studentList = pagedStudents.stream().collect(Collectors.toList());
+        System.out.println("Paged:");
+        printStudents(studentList);
+
+        System.out.println("\nSorted:");
+        List<Student> sortedStudents = studentService.getAllSortedDescendinglyBy("name");
+        printStudents(sortedStudents);
     }
     private static void printStudents(Collection<Student> students){
         for(Student s : students){

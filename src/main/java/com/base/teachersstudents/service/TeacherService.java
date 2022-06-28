@@ -3,6 +3,9 @@ package com.base.teachersstudents.service;
 import com.base.teachersstudents.dao.TeacherDAO;
 import com.base.teachersstudents.entities.Teacher;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.lang.reflect.Field;
@@ -40,6 +43,7 @@ public class TeacherService implements ITeacherService{
         }
         teacherDAO.saveTeacher(teacher);
     }
+
     @Override
     public Teacher getTeacherById(long id){
         return teacherDAO.findById(id);
@@ -73,12 +77,10 @@ public class TeacherService implements ITeacherService{
     public void deleteTeacherById(long id){
         teacherDAO.deleteById(id);
     }
+
     @Override
     public List<Teacher> getAllSortedAscendinglyBy(String fieldName){
-        if(fieldName == null){
-            return Collections.emptyList();
-        }
-        if(!fieldExistsInTeacher(fieldName)){
+        if(fieldName == null || !fieldExistsInTeacher(fieldName)){
             return Collections.emptyList();
         }
         return teacherDAO.retrieveByAscending(fieldName);
@@ -86,13 +88,34 @@ public class TeacherService implements ITeacherService{
 
     @Override
     public List<Teacher> getAllSortedDescendinglyBy(String fieldName){
-        if(fieldName == null){
-            return Collections.emptyList();
-        }
-        if(!fieldExistsInTeacher(fieldName)){
+        if(fieldName == null || !fieldExistsInTeacher(fieldName)){
             return Collections.emptyList();
         }
         return teacherDAO.retrieveByDescending(fieldName);
+    }
+
+    @Override
+    public Page<Teacher> getTeachersPagedAscendinglyBy(int page, int size, String fieldName){
+        if(page < 0 || size < 1 || fieldName == null || !fieldExistsInTeacher(fieldName)){
+            return Page.empty();
+        }
+        return teacherDAO.retrievePage(PageRequest.of(
+                page,
+                size,
+                Sort.by(Sort.Direction.ASC, fieldName))
+        );
+    }
+
+    @Override
+    public Page<Teacher> getTeachersPagedDescendinglyBy(int page, int size, String fieldName){
+        if(page < 0 || size < 1 || fieldName == null || !fieldExistsInTeacher(fieldName)){
+            return Page.empty();
+        }
+        return teacherDAO.retrievePage(PageRequest.of(
+                page,
+                size,
+                Sort.by(Sort.Direction.DESC, fieldName))
+        );
     }
 
     private boolean fieldExistsInTeacher(String fieldName){
