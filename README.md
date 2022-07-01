@@ -9,5 +9,10 @@
 1. Repositories
 2. DAOs
 3. Services
+4. Controller
 
-~~TODO add controller layer~~
+## Firefox can be used to manually make requests
+### POST
+![](post_request.png)
+### GET
+![](get_request.png)

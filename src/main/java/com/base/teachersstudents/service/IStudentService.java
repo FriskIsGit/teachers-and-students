@@ -16,4 +16,5 @@ interface IStudentService{
     Page<Student> getStudentsPagedAscendinglyBy(int page, int size, String fieldName);
     Page<Student> getStudentsPagedDescendinglyBy(int page, int size, String fieldName);
     void deleteStudentById(long id);
+    long studentCount();
 }

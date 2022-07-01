@@ -1,5 +1,7 @@
 package com.base.teachersstudents.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
@@ -12,7 +14,11 @@ public class Student{
     private Long id;
 
     private String name, lastname, email, major;
+    //hiding sensitive data, excluding from serialization
+    @JsonBackReference("age")
     private int age;
+    //preventing endless recursive serialization
+    @JsonBackReference("teachers_students_set")
     @JoinTable(
             joinColumns = @JoinColumn(name = "student_id"),
             inverseJoinColumns = @JoinColumn(name = "teacher_id")

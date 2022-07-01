@@ -1,5 +1,7 @@
 package com.base.teachersstudents.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
 import java.util.Set;
 
@@ -11,9 +13,11 @@ public class Teacher{
     private Long id;
 
     private String name, lastname, email, subject;
+    @JsonBackReference("age")
     private int age;
 
     //it's unnecessary to initialize this set
+    @JsonBackReference("teachers_students_set")
     @ManyToMany(fetch = FetchType.EAGER,  cascade = CascadeType.MERGE, mappedBy = "teachers")
     private Set<Student> students;
     public Teacher(String name, String lastname, String email, String subject, int age){

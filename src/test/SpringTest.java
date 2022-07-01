@@ -135,6 +135,12 @@ public class SpringTest {
         List<Student> sortedStudents = studentService.getAllSortedDescendinglyBy("name");
         printStudents(sortedStudents);
     }
+    @Test
+    public void sortedAscendinglyTest(){
+        List<Student> sortedStudents = studentService.getAllSortedAscendinglyBy("id");
+        printStudents(sortedStudents);
+    }
+
     private static void printStudents(Collection<Student> students){
         for(Student s : students){
             System.out.println(s);
@@ -147,5 +153,8 @@ public class SpringTest {
     }
     private static void printStudent(Student student){
         System.out.println(student);
+    }
+    private static void printTeacher(Teacher teacher){
+        System.out.println(teacher);
     }
 }

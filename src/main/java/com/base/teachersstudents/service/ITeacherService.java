@@ -16,4 +16,5 @@ interface ITeacherService{
     Page<Teacher> getTeachersPagedAscendinglyBy(int page, int size, String fieldName);
     Page<Teacher> getTeachersPagedDescendinglyBy(int page, int size, String fieldName);
     void deleteTeacherById(long id);
+    long teacherCount();
 }

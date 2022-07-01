@@ -79,6 +79,11 @@ public class StudentService implements IStudentService{
     }
 
     @Override
+    public long studentCount(){
+        return studentDAO.studentCount();
+    }
+
+    @Override
     public List<Student> getAllSortedAscendinglyBy(String fieldName){
         if(fieldName == null || !fieldExistsInStudent(fieldName)){
             return Collections.emptyList();

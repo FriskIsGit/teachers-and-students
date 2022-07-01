@@ -79,6 +79,11 @@ public class TeacherService implements ITeacherService{
     }
 
     @Override
+    public long teacherCount(){
+        return teacherDAO.teacherCount();
+    }
+
+    @Override
     public List<Teacher> getAllSortedAscendinglyBy(String fieldName){
         if(fieldName == null || !fieldExistsInTeacher(fieldName)){
             return Collections.emptyList();
