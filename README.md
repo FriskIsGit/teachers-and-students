@@ -5,7 +5,7 @@
 - Spring Boot JPA
 - MySQL
 
-### Model is made up of 3 layers:
+### Model is made up of 4 layers:
 1. Repositories
 2. DAOs
 3. Services
