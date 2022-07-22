@@ -13,6 +13,6 @@
 
 ## Firefox can be used to manually make requests
 ### POST
-![](post_request.png)
+![](img/post_request.png)
 ### GET
-![](get_request.png)
+![](img/get_request.png)
