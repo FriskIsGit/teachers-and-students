@@ -57,6 +57,11 @@ public class StudentDAO implements IStudentDAO{
     }
 
     @Override
+    public List<Student> retrieveAllByNameAndLastname(String name, String lastname){
+        return studentRepository.findByNameAndLastname(name, lastname);
+    }
+
+    @Override
     public List<Student> retrieveByMajor(String major){
         return studentRepository.findByMajor(major);
     }

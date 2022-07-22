@@ -56,6 +56,11 @@ public class TeacherDAO implements ITeacherDAO{
     }
 
     @Override
+    public List<Teacher> retrieveAllByNameAndLastname(String name, String lastname){
+        return teacherRepository.findByNameAndLastname(name, lastname);
+    }
+
+    @Override
     public List<Teacher> retrieveBySubject(String subject){
         return teacherRepository.findBySubject(subject);
     }
