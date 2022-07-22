@@ -25,19 +25,19 @@ public class TeacherService implements ITeacherService{
             System.err.println("Null teacher");
             return;
         }
-        if(isNameInvalid(teacher.getName())){
+        if(!isNameValid(teacher.getName())){
             System.err.println("Invalid name");
             return;
         }
-        if(isLastnameInvalid(teacher.getLastname())){
+        if(!isLastnameValid(teacher.getLastname())){
             System.err.println("Invalid lastname");
             return;
         }
-        if(isEmailInvalid(teacher.getEmail())){
+        if(!isEmailValid(teacher.getEmail())){
             System.err.println("Invalid email");
             return;
         }
-        if(isAgeInvalid(teacher.getAge())){
+        if(!isAgeValid(teacher.getAge())){
             System.err.println("Invalid age");
             return;
         }
@@ -104,11 +104,7 @@ public class TeacherService implements ITeacherService{
         if(page < 0 || size < 1 || fieldName == null || !fieldExistsInTeacher(fieldName)){
             return Page.empty();
         }
-        return teacherDAO.retrievePage(PageRequest.of(
-                page,
-                size,
-                Sort.by(Sort.Direction.ASC, fieldName))
-        );
+        return getTeachersPagedBy(page, size, fieldName, Sort.Direction.ASC);
     }
 
     @Override
@@ -116,10 +112,13 @@ public class TeacherService implements ITeacherService{
         if(page < 0 || size < 1 || fieldName == null || !fieldExistsInTeacher(fieldName)){
             return Page.empty();
         }
+        return getTeachersPagedBy(page, size, fieldName, Sort.Direction.DESC);
+    }
+    private Page<Teacher> getTeachersPagedBy(int page, int size, String fieldName, Sort.Direction direction){
         return teacherDAO.retrievePage(PageRequest.of(
                 page,
                 size,
-                Sort.by(Sort.Direction.DESC, fieldName))
+                Sort.by(direction, fieldName))
         );
     }
 

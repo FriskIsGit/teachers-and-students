@@ -33,6 +33,7 @@ public class StudentDAO implements IStudentDAO{
         if(studentRepository.existsById(id)){
             studentRepository.deleteById(id);
         }
+        studentRepository.deleteById(id);
     }
 
     @Override

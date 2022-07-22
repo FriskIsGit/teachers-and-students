@@ -13,9 +13,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -47,7 +45,7 @@ public class SpringTest {
         Student student2 = new Student("Johny", "Jason", "jhnjson@mail.org", "IT",20);
         Student student3 = new Student("Sudden", "Third", "student@mail.org", "Unexpected",19);
 
-        studentTeacherService.addTeacherToManyStudents(teacher1, student1, student2, student3);
+        studentTeacherService.addStudentsToTeacher(teacher1, student1, student2, student3);
     }
     @Test
     public void savedWithSeparateServices(){

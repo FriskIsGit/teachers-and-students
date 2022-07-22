@@ -8,8 +8,8 @@ import org.springframework.context.ConfigurableApplicationContext;
 @SpringBootApplication
 public class TeachersStudentsApplication implements CommandLineRunner{
 	public static void main(String[] args) {
-		SpringApplicationBuilder applicationBuilder = new SpringApplicationBuilder(TeachersStudentsApplication.class);
-		ConfigurableApplicationContext applicationContext = applicationBuilder.run(args);
+		SpringApplicationBuilder appBuilder = new SpringApplicationBuilder(TeachersStudentsApplication.class);
+		ConfigurableApplicationContext appContext = appBuilder.run(args);
 	}
 
 	@Override

@@ -9,10 +9,8 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collections;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 @RequestMapping("/api/v1")
 @RestController
@@ -44,12 +42,12 @@ public class EntityController implements IEntityController{
         return teacherService.getAllSortedAscendinglyBy("id");
     }
 
-    @GetMapping("/teachers/{name}")
+    @GetMapping("/teachers?name={name}")
     public List<Teacher> teachersByName(@PathVariable String name){
         return teacherService.getTeachersByName(name);
     }
 
-    @GetMapping("/students/{name}")
+    @GetMapping("/students?name={name}")
     public List<Student> studentsByName(@PathVariable String name){
         return studentService.getStudentsByName(name);
     }
@@ -90,8 +88,8 @@ public class EntityController implements IEntityController{
                 "/teachers<br>" +
                 "/students/count<br>" +
                 "/teachers/count<br>" +
-                "/students/{name}<br>" +
-                "/teachers/{name}<br>" +
+                "/students?name={name}<br>" +
+                "/teachers/?name={name}<br>" +
                 "/student/{id}/teachers<br>" +
                 "/teacher/{id}/students<br>" +
                 "/student/{id}<br>" +

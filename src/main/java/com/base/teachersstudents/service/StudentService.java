@@ -25,19 +25,19 @@ public class StudentService implements IStudentService{
             System.err.println("Null student");
             return;
         }
-        if(isNameInvalid(student.getName())){
+        if(!isNameValid(student.getName())){
             System.err.println("Invalid name");
             return;
         }
-        if(isLastnameInvalid(student.getLastname())){
+        if(!isLastnameValid(student.getLastname())){
             System.err.println("Invalid lastname");
             return;
         }
-        if(isEmailInvalid(student.getEmail())){
+        if(!isEmailValid(student.getEmail())){
             System.err.println("Invalid email");
             return;
         }
-        if(isAgeInvalid(student.getAge())){
+        if(!isAgeValid(student.getAge())){
             System.err.println("Invalid age");
             return;
         }
@@ -104,11 +104,7 @@ public class StudentService implements IStudentService{
         if(page < 0 || size < 1 || fieldName == null || !fieldExistsInStudent(fieldName)){
             return Page.empty();
         }
-        return studentDAO.retrievePage(PageRequest.of(
-                page,
-                size,
-                Sort.by(Sort.Direction.ASC, fieldName))
-        );
+        return getStudentsPagedByImpl(page, size, fieldName, Sort.Direction.ASC);
     }
 
     @Override
@@ -116,11 +112,14 @@ public class StudentService implements IStudentService{
         if(page < 0 || size < 1 || fieldName == null || !fieldExistsInStudent(fieldName)){
             return Page.empty();
         }
+        return getStudentsPagedByImpl(page, size, fieldName, Sort.Direction.DESC);
+    }
+
+    private Page<Student> getStudentsPagedByImpl(int page, int size, String fieldName, Sort.Direction direction){
         return studentDAO.retrievePage(PageRequest.of(
                 page,
                 size,
-                Sort.by(Sort.Direction.DESC, fieldName))
-        );
+                Sort.by(direction, fieldName)));
     }
 
     private boolean fieldExistsInStudent(String fieldName){
