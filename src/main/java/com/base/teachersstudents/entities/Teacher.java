@@ -3,6 +3,7 @@ package com.base.teachersstudents.entities;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 
 @Table(name = "teachers")
@@ -18,7 +19,7 @@ public class Teacher{
 
     //it's unnecessary to initialize this set
     @JsonBackReference("teachers_students_set")
-    @ManyToMany(fetch = FetchType.EAGER,  cascade = CascadeType.MERGE, mappedBy = "teachers")
+    @ManyToMany(fetch = FetchType.EAGER,  cascade = {CascadeType.MERGE, CascadeType.DETACH}, mappedBy = "teachers")
     private Set<Student> students;
     public Teacher(String name, String lastname, String email, String subject, int age){
         this.name = name;
@@ -75,6 +76,9 @@ public class Teacher{
     }
 
     public Set<Student> getStudents(){
+        if(students == null){
+            students = new HashSet<>();
+        }
         return students;
     }
     @Override
