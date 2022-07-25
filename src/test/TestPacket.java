@@ -2,6 +2,8 @@ import com.base.teachersstudents.dao.StudentDAOTest;
 import com.base.teachersstudents.dao.TeacherDAOTest;
 import com.base.teachersstudents.service.ConstraintsTest;
 import com.base.teachersstudents.service.StudentTeacherServiceTest;
+import com.base.teachersstudents.service.StudentServiceTest;
+import com.base.teachersstudents.service.TeacherServiceTest;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
@@ -10,6 +12,8 @@ import org.junit.runners.Suite;
         StudentDAOTest.class,
         TeacherDAOTest.class,
         StudentTeacherServiceTest.class,
+        StudentServiceTest.class,
+        TeacherServiceTest.class,
         ConstraintsTest.class
 })
 public class TestPacket{

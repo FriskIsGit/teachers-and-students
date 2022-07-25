@@ -6,16 +6,11 @@ import com.base.teachersstudents.entities.Teacher;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.data.domain.Page;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import java.text.Collator;
 import java.util.List;
-import java.util.Locale;
-import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -23,7 +18,6 @@ import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest(classes = TeachersStudentsApplication.class)
 @TestPropertySource(locations = "classpath:application.properties")
 public class StudentTeacherServiceTest{
-    private final static Locale LOCALE = Locale.ENGLISH;
 
     @Autowired
     private StudentService studentService;
@@ -96,29 +90,15 @@ public class StudentTeacherServiceTest{
     }
 
     @Test
-    public void retrieveByNull(){
-        assertNotNull(studentService);
-        Student nullNameStudent = new Student(null, "Woodward", "anymail@mail.org", "CS",19);
-        studentService.saveStudent(nullNameStudent);
-        List<Student> students = studentService.getStudentsByName(null);
-        assertEquals(0, students.size());
-    }
-    @Test
     public void retrievalsTest(){
-        assertNotNull(teacherService);
         assertNotNull(studentService);
 
         final String BY_NAME = "Juliet";
-        Teacher teacher1 = new Teacher("Sarai", "Dunlap", "saraidon@x.y", "Comedy",27);
-        Teacher teacher2 = new Teacher("Ta", "Ul", "a@x.y", "Bio Engineering",34);
-
         Student student1 = new Student(BY_NAME, "Small", "smoljuliet@mail.org", "CS",19);
         Student student2 = new Student("Deja", "Hayes", "dejavu@mail.org", "IT",20);
         Student student3 = new Student("Fernanda", "Puppet", "fernandiepop@mail.org", "Pop music",19);
 
         int studentsBefore = studentService.getStudentsByName(BY_NAME).size();
-        teacherService.saveTeacher(teacher1);
-        teacherService.saveTeacher(teacher2);
 
         studentService.saveStudent(student1);
         studentService.saveStudent(student2);
@@ -129,21 +109,6 @@ public class StudentTeacherServiceTest{
 
         Student firstRetrieved =  studentService.getStudentByNameAndLastname("Deja", "Hayes");
         assertNotNull(firstRetrieved);
-    }
-    @Test
-    public void sortingTest(){
-        assertNotNull(teacherService);
-        assertNotNull(studentService);
-
-        List<Student> students = studentService.getAllSortedAscendinglyBy("age");
-        if(students.size() > 0){
-            assertTrue(isSortedByAge(students));
-        }
-
-        List<Teacher> teachers = teacherService.getAllSortedDescendinglyBy("name");
-        if(teachers.size() > 0){
-            assertTrue(isSortedDescendinglyByName(teachers));
-        }
     }
     @Test
     public void saveStudentsByPersistingTeacher(){
@@ -185,114 +150,5 @@ public class StudentTeacherServiceTest{
         assertNotNull(retrievedStudent);
 
         assertEquals(3, retrievedStudent.getTeachers().size());
-    }
-    @Test
-    public void updateTeacherTest(){
-        assertNotNull(teacherService);
-
-        Teacher aTeacher = new Teacher("Tony", "Montana", "antoniomontana@x.y", "Business",34);
-        teacherService.saveTeacher(aTeacher);
-        Long id = aTeacher.getId();
-        assertNotNull(id);
-
-        final String NEW_EMAIL = "replacedemail@amail.ca";
-        Teacher retrievedTeacher = teacherService.getTeacherById(id);
-        retrievedTeacher.setEmail(NEW_EMAIL);
-        teacherService.saveTeacher(retrievedTeacher);
-
-        //retrieve again and check if email was changed
-        retrievedTeacher = teacherService.getTeacherById(id);
-        assertEquals(NEW_EMAIL, retrievedTeacher.getEmail());
-    }
-    @Test
-    public void paginationTest(){
-        assertNotNull(teacherService);
-
-        long teachersBefore = teacherService.teacherCount();
-        if(teachersBefore < 10){
-            for (int i = 0; i < 10-teachersBefore; i++){
-                String randFN = randomSeq(3);
-                String randLN = randomSeq(3);
-                Teacher teacher = new Teacher(
-                        randFN,
-                        randLN,
-                        randFN+randLN+"@mail.com",
-                        randomSeq(4),
-                        randomNum(18,25));
-                teacherService.saveTeacher(teacher);
-            }
-        }
-        //retrieves second page of size 5
-        Page<Teacher> pagedTeachers = teacherService.getTeachersPagedDescendinglyBy(1, 5, "name");
-        List<Teacher> teachers = pagedTeachers.stream().collect(Collectors.toList());
-
-        assertEquals(5, teachers.size());
-        assertTrue(isSortedDescendinglyByName(teachers));
-    }
-
-    @Test
-    public void sortedAscendinglyTest(){
-        assertNotNull(studentService);
-        List<Student> sortedStudents = studentService.getAllSortedAscendinglyBy("id");
-        assertTrue(isSortedById(sortedStudents));
-    }
-    private static boolean isSortedByAge(List<Student> students){
-        int previousAge = -1;
-        for (Student student : students){
-            if(previousAge <= student.getAge()){
-                previousAge = student.getAge();
-            }
-            else
-                return false;
-        }
-        return true;
-    }
-    private static boolean isSortedById(List<Student> students){
-        Long previousId = (long) -1;
-        for (Student student : students){
-            if(previousId <= student.getId()){
-                previousId = student.getId();
-            }
-            else
-                return false;
-        }
-        return true;
-    }
-    private static boolean isSortedDescendinglyByName(List<Teacher> teachers){
-        if(teachers.size() == 1){
-            return true;
-        }
-        String previousName = "";
-        boolean first = true;
-        Collator collator = Collator.getInstance(LOCALE);
-        for (Teacher teacher : teachers){
-            String currentName = teacher.getName();
-            if(first){
-                first = false;
-                previousName = currentName;
-                continue;
-            }
-            if(collator.compare(previousName, currentName) >= 0){
-                previousName = currentName;
-            }
-            else
-                return false;
-        }
-        return true;
-    }
-    public static int randomNum(int min, int max){
-        return (int)(Math.random()*(max-min+1))+min;
-    }
-    private static String randomSeq(int len){
-        StringBuilder seq = new StringBuilder();
-        seq.append((char)randomNum(65, 90));
-        for (int i = 0; i < len; i++){
-            seq.append((char)randomNum(97, 122));
-        }
-        return seq.toString();
-    }
-    private static String Nothing(){
-
-        return null;
     }
 }
