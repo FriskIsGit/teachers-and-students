@@ -6,6 +6,7 @@ import com.base.teachersstudents.service.StudentService;
 import com.base.teachersstudents.service.TeacherService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collections;
@@ -21,12 +22,6 @@ public class EntityController implements IEntityController{
     @Autowired
     StudentService studentService;
 
-    @GetMapping("/students")
-    public List<Student> allStudents() {
-        return studentService.getAllSortedAscendinglyBy("id");
-    }
-    //TODO @RequestParam(value = "name")
-
     @GetMapping("/teachers/count")
     public long teacherCount(){
         return teacherService.teacherCount();
@@ -38,28 +33,39 @@ public class EntityController implements IEntityController{
     }
 
     @GetMapping("/teachers")
-    public List<Teacher> allTeachers() {
-        return teacherService.getAllSortedAscendinglyBy("id");
-    }
-
-    @GetMapping("/teachers?name={name}")
-    public List<Teacher> teachersByName(@PathVariable String name){
+    public List<Teacher> teachersByName(@RequestParam(value = "name", required = false) String name){
+        if(name == null){
+            return teacherService.getAllSortedAscendinglyBy("id");
+        }
         return teacherService.getTeachersByName(name);
     }
 
-    @GetMapping("/students?name={name}")
-    public List<Student> studentsByName(@PathVariable String name){
+    @GetMapping("/students")
+    public List<Student> studentsByName(@RequestParam(value = "name", required = false) String name){
+        if(name == null){
+            return studentService.getAllSortedAscendinglyBy("id");
+        }
         return studentService.getStudentsByName(name);
     }
 
     @GetMapping("/teacher/{id}")
-    public Teacher teacherById(@PathVariable long id){
-        return teacherService.getTeacherById(id);
+    public ResponseEntity<Teacher> teacherById(@PathVariable long id){
+        Teacher teacher = teacherService.getTeacherById(id);
+        if(teacher == null){
+            return ResponseEntity.notFound().build();
+        }
+        System.out.println("Teacher retrieved");
+        return ResponseEntity.ok(teacher);
     }
 
     @GetMapping("/student/{id}")
-    public Student studentById(@PathVariable long id){
-        return studentService.getStudentById(id);
+    public ResponseEntity<Student> studentById(@PathVariable long id){
+        Student student = studentService.getStudentById(id);
+        if(student == null){
+            return ResponseEntity.notFound().build();
+        }
+        System.out.println("Student retrieved");
+        return ResponseEntity.ok(student);
     }
 
     @GetMapping("/student/{id}/teachers")
@@ -98,15 +104,24 @@ public class EntityController implements IEntityController{
 
     //expected header  Content-Type: application/json
     @PostMapping(path = "/student", consumes = {MediaType.APPLICATION_JSON_VALUE})
-    public void postStudent(@RequestBody Student student){
-        studentService.saveStudent(student);
-        System.out.println("Posted student with id: " + student.getId());
+    public ResponseEntity<String> postStudent(@RequestBody Student student){
+        if(studentService.saveStudent(student)){
+            System.out.println("Posted student with id: " + student.getId());
+            return ResponseEntity.status(201).body("Student created");
+        }
+        System.out.println("Failed to post student");
+        return ResponseEntity.unprocessableEntity().build();
+
     }
 
     @PostMapping(path = "/teacher", consumes = {MediaType.APPLICATION_JSON_VALUE})
-    public void postTeacher(@RequestBody Teacher teacher){
-        teacherService.saveTeacher(teacher);
-        System.out.println("Posted teacher with id: " + teacher.getId());
+    public ResponseEntity<String> postTeacher(@RequestBody Teacher teacher){
+        if(teacherService.saveTeacher(teacher)){
+            System.out.println("Posted teacher with id: " + teacher.getId());
+            return ResponseEntity.status(201).body("Teacher created");
+        }
+        System.out.println("Failed to post teacher");
+        return ResponseEntity.unprocessableEntity().build();
     }
 
     @DeleteMapping("/student/{id}")

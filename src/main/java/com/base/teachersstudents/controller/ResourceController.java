@@ -13,9 +13,9 @@ import java.io.FileNotFoundException;
 
 @RequestMapping("/download/")
 @RestController
-public class ResourceController{
+public class ResourceController {
     @GetMapping(path = {"/file/Foo", "/file/Foo.class"})
-    public ResponseEntity<InputStreamResource> download(){
+    public ResponseEntity<InputStreamResource> downloadFoo(){
         System.out.println("Called");
         String aFilePath = "src/main/resources/Foo.class";
         File file = new File(aFilePath);

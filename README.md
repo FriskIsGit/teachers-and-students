@@ -11,8 +11,13 @@
 3. Services
 4. Controller
 
-## Firefox can be used to manually make requests
+### There are tests for DAOs, Services and the Controller
+### You can make your own requests with Postman, Curl or Firefox
 ### POST
 ![](img/post_request.png)
 ### GET
 ![](img/get_request.png)
+
+# How to run the application:
+ - move to project's root directory
+ - run command: mvn spring-boot:run

@@ -1,3 +1,4 @@
+import com.base.teachersstudents.controller.EntityControllerTest;
 import com.base.teachersstudents.dao.StudentDAOTest;
 import com.base.teachersstudents.dao.TeacherDAOTest;
 import com.base.teachersstudents.service.ConstraintsTest;
@@ -14,6 +15,7 @@ import org.junit.runners.Suite;
         StudentTeacherServiceTest.class,
         StudentServiceTest.class,
         TeacherServiceTest.class,
+        EntityControllerTest.class,
         ConstraintsTest.class
 })
 public class TestPacket{

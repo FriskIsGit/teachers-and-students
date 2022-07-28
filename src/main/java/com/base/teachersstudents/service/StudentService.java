@@ -20,28 +20,29 @@ public class StudentService implements IStudentService{
     private StudentDAO studentDAO;
 
     @Override
-    public void saveStudent(Student student){
+    public boolean saveStudent(Student student){
         if(student == null){
             System.err.println("Null student");
-            return;
+            return false;
         }
         if(!isNameValid(student.getName())){
             System.err.println("Invalid name");
-            return;
+            return false;
         }
         if(!isLastnameValid(student.getLastname())){
             System.err.println("Invalid lastname");
-            return;
+            return false;
         }
         if(!isEmailValid(student.getEmail())){
             System.err.println("Invalid email");
-            return;
+            return false;
         }
         if(!isAgeValid(student.getAge())){
             System.err.println("Invalid age");
-            return;
+            return false;
         }
         studentDAO.saveStudent(student);
+        return true;
     }
 
     @Override

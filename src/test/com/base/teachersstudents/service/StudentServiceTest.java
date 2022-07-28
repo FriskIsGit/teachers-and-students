@@ -25,10 +25,9 @@ public class StudentServiceTest{
         assertNotNull(studentService);
 
         List<Student> sortedStudents = studentService.getAllSortedAscendinglyBy("id");
-        if(sortedStudents.size() > 0){
-            assertTrue(isSortedByAge(sortedStudents));
+        if(sortedStudents.size() > 1){
+            assertTrue(isSortedById(sortedStudents));
         }
-        assertTrue(isSortedById(sortedStudents));
     }
     @Test
     public void sortingAscendinglyByAge(){

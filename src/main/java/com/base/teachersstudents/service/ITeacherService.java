@@ -6,7 +6,7 @@ import org.springframework.data.domain.Page;
 import java.util.List;
 
 interface ITeacherService{
-    void saveTeacher(Teacher teacher);
+    boolean saveTeacher(Teacher teacher);
     Teacher getTeacherById(long id);
     List<Teacher> getTeachersByName(String name);
     List<Teacher> getTeachersByLastname(String lastname);

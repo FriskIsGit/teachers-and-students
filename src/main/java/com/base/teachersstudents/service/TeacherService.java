@@ -20,28 +20,29 @@ public class TeacherService implements ITeacherService{
     private TeacherDAO teacherDAO;
 
     @Override
-    public void saveTeacher(Teacher teacher){
+    public boolean saveTeacher(Teacher teacher){
         if(teacher == null){
             System.err.println("Null teacher");
-            return;
+            return false;
         }
         if(!isNameValid(teacher.getName())){
             System.err.println("Invalid name");
-            return;
+            return false;
         }
         if(!isLastnameValid(teacher.getLastname())){
             System.err.println("Invalid lastname");
-            return;
+            return false;
         }
         if(!isEmailValid(teacher.getEmail())){
             System.err.println("Invalid email");
-            return;
+            return false;
         }
         if(!isAgeValid(teacher.getAge())){
             System.err.println("Invalid age");
-            return;
+            return false;
         }
         teacherDAO.saveTeacher(teacher);
+        return true;
     }
 
     @Override
