@@ -19,5 +19,14 @@
 ![](img/get_request.png)
 
 # How to run the application:
- - move to project's root directory
- - run command: mvn spring-boot:run
+- make sure to configure [application.properties](src\main\resources\application.properties)
+- make sure a mysql server is running
+- move to project's root directory
+## On Linux
+- run command: mvnw.cmd spring-boot:run
+## On Windows
+- run command: mvnw spring-boot:run
+
+#### Notes
+The presence of mvn wrappers in the repository is to allow running
+the Maven project without having Maven installed and set on the path.
