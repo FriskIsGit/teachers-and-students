@@ -94,12 +94,12 @@ public class EntityControllerTest{
     @Test
     public void postTeacher(){
         final int expectedStatus = 201;
-        final String studentInJson = "{\"name\":\"Ileana\",\"lastname\":\"Slate\",\"email\":\"illieslate@mail.og\",\"age\":27,\"subject\":\"Economics\"}";
+        final String teacherInJson = "{\"name\":\"Ileana\",\"lastname\":\"Slate\",\"email\":\"illieslate@mail.og\",\"age\":27,\"subject\":\"Economics\"}";
         MvcResult result;
         MockHttpServletRequestBuilder request = MockMvcRequestBuilders
                 .post(API_ENDPOINT + "teacher")
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
-                .content(studentInJson);
+                .content(teacherInJson);
         try{
             result = mvc.perform(request).andReturn();
         }catch (Exception exc){
@@ -112,11 +112,11 @@ public class EntityControllerTest{
     public void lackOfContentType(){
         //unsupported media type
         final int expectedStatus = 415;
-        final String studentInJson = "{\"name\":\"Ileana\",\"lastname\":\"Slate\",\"email\":\"illieslate@mail.og\",\"age\":27,\"subject\":\"Economics\"}";
+        final String content = "{\"name\":\"Ileana\",\"lastname\":\"Slate\",\"email\":\"illieslate@mail.og\",\"age\":27,\"subject\":\"Economics\"}";
         MvcResult result;
         MockHttpServletRequestBuilder request = MockMvcRequestBuilders
                 .post(API_ENDPOINT + "teacher")
-                .content(studentInJson);
+                .content(content);
         try{
             result = mvc.perform(request).andReturn();
         }catch (Exception exc){
@@ -129,12 +129,12 @@ public class EntityControllerTest{
     public void incorrectEntity(){
         //unprocessable entity
         final int expectedStatus = 422;
-        final String studentInJson = "{\"name\":\"Ileana\",\"lastname\":\"Slate\",\"email\":\"illieslate@mail.og\",\"subject\":\"Economics\"}";
+        final String teacherInJson = "{\"name\":\"Ileana\",\"lastname\":\"Slate\",\"email\":\"illieslate@mail.og\",\"subject\":\"Economics\"}";
         MvcResult result;
         MockHttpServletRequestBuilder request = MockMvcRequestBuilders
                 .post(API_ENDPOINT + "teacher")
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
-                .content(studentInJson);
+                .content(teacherInJson);
         try{
             result = mvc.perform(request).andReturn();
         }catch (Exception exc){
@@ -142,5 +142,51 @@ public class EntityControllerTest{
             return;
         }
         assertEquals(expectedStatus, result.getResponse().getStatus());
+    }
+    @Test
+    public void emptyContent(){
+        //bad request
+        final int expectedStatus = 400;
+        final String content = "";
+        MvcResult result;
+        MockHttpServletRequestBuilder request = MockMvcRequestBuilders
+                .post(API_ENDPOINT + "teacher")
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                .content(content);
+        try{
+            result = mvc.perform(request).andReturn();
+        }catch (Exception exc){
+            assertFalse(false);
+            return;
+        }
+        assertEquals(expectedStatus, result.getResponse().getStatus());
+    }
+    @Test
+    public void getTeacherAndStudentCount(){
+        //bad request
+        final int expectedStatus = 200;
+        MvcResult result1;
+        MvcResult result2;
+        MockHttpServletRequestBuilder request1 = MockMvcRequestBuilders.get(API_ENDPOINT + "teachers/count");
+        MockHttpServletRequestBuilder request2 = MockMvcRequestBuilders.get(API_ENDPOINT + "students/count");
+        try{
+            result1 = mvc.perform(request1).andReturn();
+            result2 = mvc.perform(request2).andReturn();
+        }catch (Exception exc){
+            assertFalse(false);
+            return;
+        }
+        assertEquals(expectedStatus, result1.getResponse().getStatus());
+        assertEquals(expectedStatus, result2.getResponse().getStatus());
+        try{
+            String content1 = result1.getResponse().getContentAsString();
+            String content2 = result2.getResponse().getContentAsString();
+            long count1 = Long.parseLong(content1);
+            long count2 = Long.parseLong(content2);
+            assertTrue(count1 >= 0);
+            assertTrue(count2 >= 0);
+        }catch (UnsupportedEncodingException exc){
+            assertFalse(false);
+        }
     }
 }

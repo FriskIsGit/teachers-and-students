@@ -18,7 +18,7 @@
 ### GET
 ![](img/get_request.png)
 
-# How to run the application:
+# How to run the application from terminal:
 - make sure to configure [application.properties](src\main\resources\application.properties)
 - make sure a mysql server is running
 - move to project's root directory
@@ -30,3 +30,4 @@
 #### Notes
 The presence of mvn wrappers in the repository is to allow running
 the Maven project without having Maven installed and set on the path.
+#### It's prone to error, so it's recommended to have Maven installed
